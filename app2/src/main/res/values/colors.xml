@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#F64669</color>
+    <color name="colorAccent">#F64669</color>
+    <color name="colorTitle">#F64669</color>
+
+    <!--新闻标题的颜色-->
+    <color name="news_color">#000</color>
+    <color name="text_color">#ffffff</color>
+    <!--gridView里边的字体的颜色 比如艺术 分享经济等-->
+    <color name="grid_view_title">#808a87</color>
+    <color name="gray">#808a87</color>
+</resources>

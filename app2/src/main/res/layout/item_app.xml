@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginRight="4dp"
+
+    android:layout_marginLeft="4dp"
+
+    android:background="#F6F4EE"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:background="?android:attr/selectableItemBackground"
+
+        android:layout_gravity="center"
+        android:padding="8dp"
+        app:cardBackgroundColor="#fff"
+        app:cardCornerRadius="8dp">
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="99dp"
+            android:gravity="center"
+            android:padding="16dp">
+
+
+            <ImageView
+                android:id="@+id/apps_iv2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_alignTop="@+id/rl"
+                android:layout_toRightOf="@+id/app_top"
+                android:layout_toEndOf="@+id/app_top" />
+
+            <RelativeLayout
+                android:id="@+id/rl"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/apps_iv2">
+
+                <TextView
+                    android:id="@+id/apps_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="App"
+                    android:maxEms="7" android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textSize="13sp"
+                    android:textAppearance="?android:textAppearanceMedium"
+                    android:textColor="#000"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/download"
+                android:layout_width="wrap_content"
+                android:layout_height="33dp"
+                android:background="@drawable/btn_"
+                android:text="安装"
+                android:textSize="13sp"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColor="#ffc2b7"
+                android:layout_alignBottom="@+id/apps_iv1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:id="@+id/app_top"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:text="1"
+
+
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <ImageView
+                android:id="@+id/apps_iv1"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/ic_launcher"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/apps_iv2"
+                android:layout_toStartOf="@+id/apps_iv2" />
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+
+
