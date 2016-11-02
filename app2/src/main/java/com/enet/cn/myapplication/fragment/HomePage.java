@@ -2,6 +2,7 @@ package com.enet.cn.myapplication.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -33,6 +34,10 @@ import com.enet.cn.myapplication.fragment.Base.BaseFragment;
 import com.enet.cn.myapplication.interface_.ResultListener;
 import com.enet.cn.myapplication.utils.Contants;
 import com.enet.cn.myapplication.utils.VolleyUtil;
+import com.jude.rollviewpager.OnItemClickListener;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
+import com.jude.rollviewpager.hintview.TextHintView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,7 +50,7 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
 
 
     private View home_view;
-    private ViewPager home_view_pager;
+    private RollPagerView home_view_pager;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private ListView home_lv;
@@ -56,7 +61,7 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
     private View currentDot;
 
     private GridView category_gridView;
-    private View[] dots;
+
     private LinearLayout mLLDot;
     private List<Carousel> carousellist;
     private GridView home_gridView;
@@ -66,42 +71,11 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
     private int lastVisibleItemPosition = 0;// 标记上次滑动位置
 
 
-    /**
-     * 切换广告条
-     */
-
-    private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case Contants.SWITCH_BANNER:
-                    switchBanner();
-                    break;
-            }
-        }
-
-        ;
-    };
     private ScrollView scrollView;
     private TextView title;
     private Button toTopBtn;
 
 
-    /**
-     * 切换广告条
-     */
-    public void switchBanner() {
-        int currentItem = home_view_pager.getCurrentItem();    // 获取当前ViewPager显示的位置
-        home_view_pager.setCurrentItem(currentItem + 1);    // 切换到下一页
-        handler.removeMessages(Contants.SWITCH_BANNER);                // 把之前的消息都移除掉
-        handler.sendEmptyMessageDelayed(Contants.SWITCH_BANNER, 3000);    // 3秒后切换下一页
-    }
-
-
-    @Override
-    public void onDestroy() {
-        handler.removeMessages(Contants.SWITCH_BANNER);    // 移除切换广告条的消息
-        super.onDestroy();
-    }
 
     /**
      * 初始化布局文件
@@ -110,12 +84,13 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
     protected void initView() {
         title = (TextView) stateLayout.findViewById(R.id.title_bar);
         scrollView = (ScrollView) stateLayout.findViewById(R.id.sv);
-        home_view_pager = (ViewPager) stateLayout.findViewById(R.id.home_view_pager);
-        mLLDot = (LinearLayout) stateLayout.findViewById(R.id.ll_dot);
+        home_view_pager = (RollPagerView) stateLayout.findViewById(R.id.home_view_pager);
+
         home_gridView = (GridView) stateLayout.findViewById(R.id.home_gridView);
         category_gridView = (GridView) stateLayout.findViewById(R.id.home_gridView_);
         toTopBtn = (Button) stateLayout.findViewById(R.id.top_btn);
         toTopBtn.setOnClickListener(this);
+        home_view_pager.setHintView(new TextHintView(MyApplication.getContext()));
 
     }
 
@@ -146,51 +121,6 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
                     Log.e("123post", "" + mdefault.get(0).getImagepath());
                     if (home != null) {
                         home_view_pager.setAdapter(new BannerAdapter(carousellist));
-                        //创建点的集合
-                        dots = new View[home.getData().getInfo().getCarousel().size()];
-                        for (int i = 0; i < home.getData().getInfo().getCarousel().size(); i++) {
-                            //根据图片的张数，创建相应的个数的点
-                            createDot(i);
-                        }
-                        home_view_pager.setCurrentItem(home_view_pager.getAdapter().getCount() / 2);
-                        home_view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                            @Override
-                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                                changed(position);
-                            }
-
-                            @Override
-                            public void onPageSelected(int position) {
-                            }
-
-                            @Override
-                            public void onPageScrollStateChanged(int state) {
-                            }
-                        });
-
-                        home_view_pager.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                switch (event.getAction()) {
-                                    case MotionEvent.ACTION_DOWN:// 按下
-                                        Toast.makeText(getContext(), "图片被点击了", Toast.LENGTH_SHORT).show();
-                                        // 当参数为null时，handler将移除所有的回调和消息
-                                        handler.removeCallbacksAndMessages(null);
-                                        break;
-                                    case MotionEvent.ACTION_CANCEL:// 事件取消
-                                        // 给handler发一条消息即可让它自动继续轮播
-                                        handler.sendEmptyMessageDelayed(0, 3000);
-                                        break;
-                                    case MotionEvent.ACTION_UP:// 抬起
-                                        handler.sendEmptyMessageDelayed(0, 3000);
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                return false;
-                            }
-                        });
-                        handler.sendEmptyMessageDelayed(Contants.SWITCH_BANNER, 3000);
                         stateLayout.showContentView();
                     }
                     home_gridView.setAdapter(new GridViewAdapter(home.getData().getInfo().getNews()));
@@ -234,6 +164,7 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
      * post方式请求数据
      */
     private void VolleyPost() {
+
         /**
          * post的方式
          */
@@ -251,74 +182,24 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
                 Log.e("123post", "" + mdefault.get(0).getImagepath());
                 if (home != null) {
                     home_view_pager.setAdapter(new BannerAdapter(carousellist));
-                    //创建点的集合
-                    dots = new View[home.getData().getInfo().getCarousel().size()];
-                    for (int i = 0; i < home.getData().getInfo().getCarousel().size(); i++) {
-                        //根据图片的张数，创建相应的个数的点
-                        createDot(i);
-                    }
-                    home_view_pager.setCurrentItem(home_view_pager.getAdapter().getCount() / 2);
-                    home_view_pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    //轮播图的点击事件
+                    home_view_pager.setOnItemClickListener(new OnItemClickListener() {
                         @Override
-                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                            changed(position);
-                        }
+                        public void onItemClick(int position) {
 
-                        @Override
-                        public void onPageSelected(int position) {
-                        }
+                            List<News> aDefault = home.getData().getInfo().getNews();
+                            if(position==0){
 
-                        @Override
-                        public void onPageScrollStateChanged(int state) {
-                        }
-                    });
+                                switchActivity2(aDefault,3);
+                            }else if(position==1){
 
-                    home_view_pager.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            switch (event.getAction()) {
-                                case MotionEvent.ACTION_DOWN:// 按下
-
-                                 /*   List<Default> aDefault = home.getData().getInfo().getDefault();
-                                    *//**跳转到activity界面*//*
-                                    List<News> news = home.getData().getInfo().getNews();
-                                    for (int i=0;i<=carousellist.size();i++){
-                                        if(i==0){
-                                            changed(0);
-                                            switchActivity1(news, 3);
-
-                                            break;
-                                        }else if(i==1){
-                                            changed(1);
-                                            switchActivity1(news, 1);
-
-                                            break;
-                                        }else if(i==2){
-                                            changed(2);
-                                            switchActivity1(news, 4);
-                                            break;
-                                        }
-                                    }*/
-
-
-
-                                    // 当参数为null时，handler将移除所有的回调和消息
-                                    handler.removeCallbacksAndMessages(null);
-                                    break;
-                                case MotionEvent.ACTION_CANCEL:// 事件取消
-                                    // 给handler发一条消息即可让它自动继续轮播
-                                    handler.sendEmptyMessageDelayed(0, 3000);
-                                    break;
-                                case MotionEvent.ACTION_UP:// 抬起
-                                    handler.sendEmptyMessageDelayed(0, 3000);
-                                    break;
-                                default:
-                                    break;
+                                switchActivity2(aDefault,1);
+                            }else if(position==2){
+                                switchActivity2(aDefault,4);
                             }
-                            return false;
                         }
+
                     });
-                    handler.sendEmptyMessageDelayed(Contants.SWITCH_BANNER, 3000);
                     stateLayout.showContentView();
                 }
                 home_gridView.setAdapter(new GridViewAdapter(home.getData().getInfo().getNews()));
@@ -368,7 +249,12 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
         startActivity(intent);
     }
 
-    private void switchActivity1(List<News> aDefault, int position) {
+    /**
+     * 为了响应轮播图的点击事件
+     * @param aDefault
+     * @param position
+     */
+    private void switchActivity2(List<News> aDefault, int position) {
 
         Intent intent = new Intent(MyApplication.getContext(), DetailActivity.class);
         intent.putExtra("new_id", aDefault.get(position).getId());
@@ -376,40 +262,6 @@ public class HomePage extends BaseFragment implements View.OnClickListener {
         intent.putExtra("new_catid", aDefault.get(position).getCatid());
         intent.putExtra("new_imagepath", aDefault.get(position).getImagepath());
         startActivity(intent);
-    }
-
-
-
-    /**
-     * 创建点
-     *
-     * @param i
-     */
-    private void createDot(int i) {
-        //保存创建的点
-        dots[i] = new View(getContext());
-        //LayoutParams : 设置view的属性
-        LinearLayout.LayoutParams params = new LayoutParams(11, 11);
-        //设置背景图片
-        dots[i].setBackgroundResource(R.drawable.selector_dot);
-        params.rightMargin = 5;//设置距离右边的距离
-        //设置属性给view
-        dots[i].setLayoutParams(params);
-        //将view添加到点的容器中显示
-        mLLDot.addView(dots[i]);
-    }
-
-    private void changed(int position) {
-        position = position % carousellist.size();
-
-        if (currentDot != null) {
-            currentDot.setSelected(false);
-        }
-
-        //设置下一个点是白色的点
-        dots[position].setSelected(true);
-        //保存白色的点
-        currentDot = dots[position];
     }
 
     /**
