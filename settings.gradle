@@ -1,1 +1,1 @@
-include ':app2', ':shapeloading', ':guidelibrary', ':okhttputils', ':okhttpserver'
+include ':xnj', ':shapeloading', ':guidelibrary', ':okhttputils', ':okhttpserver'

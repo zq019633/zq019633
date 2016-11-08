@@ -9,11 +9,11 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app2" />
             <option value="$PROJECT_DIR$/guidelibrary" />
             <option value="$PROJECT_DIR$/okhttpserver" />
             <option value="$PROJECT_DIR$/okhttputils" />
             <option value="$PROJECT_DIR$/shapeloading" />
+            <option value="$PROJECT_DIR$/xnj" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
