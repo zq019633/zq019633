@@ -1,23 +1,23 @@
 [
     {
-        "outputFile": "C:\\Users\\Administrator\\Desktop\\work\\beifen\\MyApplication - okhttp-utils\\guidelibrary\\build\\intermediates\\res\\merged\\androidTest\\debug\\values\\values.xml",
+        "outputFile": "/Users/zhouqiang/Desktop/未命名文件夹 2/zq019633/guidelibrary/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
         "map": [
             {
                 "to": {
-                    "startLine": 3,
+                    "startLine": 23,
                     "startColumn": 4,
-                    "startOffset": 1797,
+                    "startOffset": 2049,
                     "endColumn": 47,
-                    "endOffset": 1840
+                    "endOffset": 2092
                 },
                 "from": {
-                    "file": "C:\\Users\\Administrator\\Desktop\\work\\beifen\\MyApplication - okhttp-utils\\guidelibrary\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
+                    "file": "/Users/zhouqiang/Desktop/未命名文件夹 2/zq019633/guidelibrary/build/intermediates/bundles/debug/res/values/values.xml",
                     "position": {
-                        "startLine": 3,
+                        "startLine": 23,
                         "startColumn": 4,
-                        "startOffset": 1797,
+                        "startOffset": 2049,
                         "endColumn": 47,
-                        "endOffset": 1840
+                        "endOffset": 2092
                     }
                 }
             }

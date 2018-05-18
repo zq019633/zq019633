@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\Administrator\Desktop\work\beifen\MyApplication - okhttp-utils\guidelibrary\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\Administrator\Desktop\work\beifen\MyApplication - okhttp-utils\guidelibrary\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/zhouqiang/Desktop/未命名文件夹 2/zq019633/guidelibrary/src/main/assets"/><source path="/Users/zhouqiang/Desktop/未命名文件夹 2/zq019633/guidelibrary/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/zhouqiang/Desktop/未命名文件夹 2/zq019633/guidelibrary/src/debug/assets"/></dataSet></merger>
